@@ -2,6 +2,7 @@ require 'base64'
 require 'cuba'
 require 'cuba/render'
 require 'erb'
+require './helpers'
 
 MEDIA_DIR = 'media'.freeze
 
@@ -9,6 +10,8 @@ Cuba.plugin Cuba::Render
 
 Cuba.use Rack::Static,
   urls: ["/media"]
+
+Cuba.plugin Helpers
 
 Cuba.define do
   on get do
@@ -18,18 +21,22 @@ Cuba.define do
     end
 
     on "watch/:filekey" do |filekey|
-      @file_path = Base64.urlsafe_decode64(filekey)
-      unless @file = Video.list[@file_path]
-        res.status = 404
-        res.write 'not found'
+      @file_path =
+        begin
+          Base64.urlsafe_decode64(filekey)
+        rescue ArgumentError
+          four_oh_four
+        end
 
-        halt(res.finish)
+      unless @file = Video.list[@file_path]
+        four_oh_four
       end
 
       res.write view('watch')
     end
   end
 end
+
 
 module Video
   module_function
