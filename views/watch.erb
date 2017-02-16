@@ -1,0 +1,5 @@
+<h2>watching: <%= @file[:display_name] %></h2>
+
+<video id="my-video" class="video-js vjs-fluid" controls preload="auto" poster="" data-setup="{}">
+  <source src="/<%= @file_path %>" type='video/<%= @file_path.match?(/\.mkv/) ? 'webm' : 'mp4' %>'>
+</video>

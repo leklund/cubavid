@@ -1,0 +1,7 @@
+<h1>videos</h1>
+
+<ul>
+  <% @files.each do |_file_path, metadata| %>
+    <li><a href="/watch/<%= metadata[:param] %>"><%= metadata[:display_name] %></a></li>
+  <% end %>
+</ul>
