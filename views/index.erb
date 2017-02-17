@@ -1,7 +1,23 @@
+<div class='container'>
 <h1>videos</h1>
 
-<ul>
+<table class='pure-table pure-table-bordered'>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>&nbsp;</th>
+      <th>&nbsp;</th>
+    </tr>
+  </thead>
+  <tbody>
   <% @files.each do |file_path, metadata| %>
-    <li><a href="/watch/<%= metadata[:param] %>"><%= metadata[:display_name] %></a> [ <a href="<%= file_path %>">direct</a> ]</li>
+    <tr>
+      <td><%= metadata[:display_name] %></td>
+      <td><a href="/watch/<%= metadata[:param] %>">watch</a></td>
+      <td><a href="<%= file_path %>">dl</a></td>
+    </tr>
   <% end %>
-</ul>
+  </tbody>
+</table>
+
+</div>
