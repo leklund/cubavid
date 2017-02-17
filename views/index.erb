@@ -13,7 +13,7 @@
   <% @files.each do |file_path, metadata| %>
     <tr>
       <td><%= metadata[:display_name] %></td>
-      <td><a href="/watch/<%= metadata[:param] %>">watch</a></td>
+      <td><% if metadata[:display_name].match?(/(\.mp4|\.mkv)/) %><a href="/watch/<%= metadata[:param] %>">watch</a><% end %></td>
       <td><a href="<%= file_path %>">dl</a></td>
     </tr>
   <% end %>
