@@ -2,6 +2,7 @@ require 'base64'
 require 'cuba'
 require 'cuba/render'
 require 'erb'
+require 'http'
 require './helpers'
 
 MEDIA_DIR = 'media'.freeze
