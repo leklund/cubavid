@@ -1,3 +1,5 @@
 media
 log
 vendor/cache
+config/secrets.yml
+tmp
