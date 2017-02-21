@@ -36,9 +36,21 @@ Cuba.define do
 
       res.write view('watch')
     end
+
+    on 'upload' do
+      res.write view('upload')
+    end
+  end
+
+  on post do
+    on 'upload' do
+      on param('linky') do |linky|
+        download_and_start(linky)
+        res.redirect '/'
+      end
+    end
   end
 end
-
 
 module Video
   module_function

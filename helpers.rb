@@ -39,4 +39,25 @@ module Helpers
   def currently_downloading
     active_torrents.reject { |tor| tor[:eta] ==  'Done' || tor[:percentage] == '100%'}
   end
+
+  def download_and_start(link)
+    http = HTTP['User-Agent' => config[:user_agent], 'Cookie' => config['cookie']]
+
+    res = http.get(link)
+
+    raise 'err' unless res.status == 200
+
+    if res['Content-Disposition']
+      cd = res['Content-Disposition']
+      cd.match(/filename="(.+)"$/)
+      filename = $1
+    else
+      filename = link.gsub(/^.*&/, '')
+    end
+
+    torrent_file = File.join('tmp', filename)
+    File.open(torrent_file, 'wb' ) {|f| f.write res.body }
+
+    `transmission-remote --auth #{config['transmission_rpc_user']}:#{config['transmission_rpc_password']} -a #{torrent_file}`
+  end
 end
