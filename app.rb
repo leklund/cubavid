@@ -18,6 +18,7 @@ Cuba.define do
   on get do
     on root do
       @files = Video.list
+      @downloads = req['all'].nil? ? currently_downloading : active_torrents
       res.write view('index')
     end
 

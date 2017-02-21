@@ -1,5 +1,5 @@
 <div class='container'>
-<h1>videos</h1>
+<h1>Cycling video jukebox:</h1>
 
 <table class='pure-table pure-table-bordered'>
   <thead>
@@ -20,4 +20,33 @@
   </tbody>
 </table>
 
+<hr>
+<h2>In progress downloads</h2>
+<% if @downloads %>
+  <table  class='pure-table pure-table-bordered'>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>% complete</th>
+        <th>ETA</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @downloads.each do |dl| %>
+        <tr>
+          <td><%= dl[:name] %></td>
+          <td><%= dl[:percentage] %></td>
+          <td><%= dl[:eta] %></td>
+          <td><%= dl[:status] %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <p>No downloads. SAD!</p>
+<% end %>
+
+
+<hr>
 </div>
