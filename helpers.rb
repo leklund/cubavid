@@ -1,3 +1,5 @@
+require 'shellwords'
+
 module Helpers
   FIELD_MAPPING = {
     percentage: 7..12,
@@ -37,7 +39,7 @@ module Helpers
   end
 
   def currently_downloading
-    active_torrents.reject { |tor| tor[:eta] ==  'Done' || tor[:percentage] == '100%'}
+    active_torrents&.reject { |tor| tor[:eta] ==  'Done' || tor[:percentage] == '100%'}
   end
 
   def download_and_start(link)
@@ -58,6 +60,7 @@ module Helpers
     torrent_file = File.join('tmp', filename)
     File.open(torrent_file, 'wb' ) {|f| f.write res.body }
 
-    `transmission-remote --auth #{config['transmission_rpc_user']}:#{config['transmission_rpc_password']} -a #{torrent_file}`
+
+    `transmission-remote --auth #{config['transmission_rpc_user']}:#{config['transmission_rpc_password']} -a #{Shellwords.escape(torrent_file)}`
   end
 end
